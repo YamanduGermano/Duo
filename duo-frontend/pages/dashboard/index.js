@@ -4,13 +4,30 @@ import Link from 'next/link';
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 
-// import styles from 'login.module.css';
+import styles from './dashboard.module.css';
 
 // Imagens
 import Logo from '../../public/DuoIcon.svg';
 
+// Icones
+import Call from '../../public/Icons/Call.svg';
+import Clock from '../../public/Icons/Clock.svg';
+import Close from '../../public/Icons/Close.svg';
+import Exit from '../../public/Icons/Exit.svg';
+import Glasses from '../../public/Icons/Glasses.svg';
+import Lines from '../../public/Icons/Lines.svg';
+import Live from '../../public/Icons/Live.svg';
+import Ok from '../../public/Icons/Ok.svg';
+import Open from '../../public/Icons/Open.svg';
+import Power from '../../public/Icons/Power.svg';
+import Search from '../../public/Icons/Search.svg';
+import Tick from '../../public/Icons/Tick.svg';
+import Trash from '../../public/Icons/Trash.svg';
+import X from '../../public/Icons/X.svg';
+
 // Components
 import FormItem from '../../components/formularioitem/index.js';
+import LinesIcon from '../../components/linesicon/index.js';
 
 export default function Login() {
 	const formlist = [
@@ -27,34 +44,52 @@ export default function Login() {
 	const [Status, setStatus] = useState(true);
 	const [formItemName, setName] = useState('');
 	const [formItemVotos, setVotos] = useState(0);
-	const [overlayLeft, setOverlayLeft] = useState(true);
+	const [overlayLeft, setOverlayLeft] = useState(false);
 	const [overlayRight, setOverlayRight] = useState(false);
 
 	const handleItemClick = (item) => {
 		setName(item.nome);
+		setVotos(item.votos);
 		setStatus(item.ativo);
 		setOverlayLeft(true);
 		console.log('item clicked');
 	};
 	return (
 		<div>
-			<maincontent>
-				<logo
+			<maincontent style={{ width: '100%' }}>
+				<header
 					style={{
-						display: 'block',
-						width: 523,
+						display: 'flex',
+						alignItems: 'center',
+						paddingLeft: 20,
+						paddingRight: 20,
 					}}>
-					<Image
-						src={Logo}
-						alt='Duo Logo'
-						width='100%'
-						height='100%'
-						layout='responsive'
-						objectFit='contain'
-					/>
-				</logo>
+					<logo
+						className={styles.icon}
+						style={{
+							display: 'block',
+						}}>
+						<Image
+							src={Logo}
+							alt='Duo Logo'
+							width='100%'
+							height='100%'
+							layout='responsive'
+							objectFit='contain'
+						/>
+					</logo>
+					<LinesIcon color={'#000000'} style={{ float: 'right' }} />
+				</header>
 				<p>Seus formulários</p>
-				<formularios>
+				<formularios
+					style={{
+						margin: 'auto',
+						maxWidth: 800,
+						display: 'flex',
+						justifyContent: 'center',
+						flexWrap: 'wrap',
+						width: '100%',
+					}}>
 					{formlist.map((item) => (
 						<FormItem click={handleItemClick} props={item} key={item.key} />
 					))}
@@ -78,22 +113,9 @@ export default function Login() {
 					}}
 				/>
 				<cardoverlay
-					style={{
-						minWidth: 180,
-						position: 'fixed',
-						display: 'block',
-						width: 'fit-content',
-						backgroundColor: Status ? '#00FF47' : 'black',
-						padding: 15,
-						paddingRight: 30,
-						top: 0,
-						bottom: 0,
-						left: overlayLeft ? 0 : '-100%',
-					}}>
+					className={[styles.leftoverlay, overlayLeft ? null : styles.closed]}
+					style={{ backgroundColor: Status ? '#00FF47' : 'black' }}>
 					<status
-						onClick={() => {
-							setStatus(!Status);
-						}}
 						style={{
 							overflow: 'hidden',
 							boxSizing: 'content-box',
@@ -117,20 +139,59 @@ export default function Login() {
 						/>
 						<p style={{ color: 'white' }}>{Status ? 'Ativo' : 'Inativo'}</p>
 					</status>
-					<p>{formItemName}</p>
-					<p>{formItemVotos}</p>
-					<p>Votos</p>
-					<perguntas>
-						<p>Perguntas</p>
+
+					{/* Infos */}
+					<p
+						style={{
+							color: 'white',
+							fontWeight: 'bold',
+							fontSize: 40,
+							margin: 0,
+						}}>
+						{formItemName}
+					</p>
+					<p
+						style={{
+							lineHeight: '90%',
+							color: 'white',
+							fontSize: 100,
+							margin: 0,
+						}}>
+						{formItemVotos}
+					</p>
+					<p
+						style={{
+							color: 'white',
+							fontSize: 14,
+							margin: 0,
+							marginBottom: 20,
+						}}>
+						Votos
+					</p>
+
+					{/* Buttons */}
+
+					<perguntas className={styles.overlayItem}>
+						<Image alt={'Perguntas Icone'} src={Lines} width={20} />
+						<p style={{ marginLeft: 15 }}>Perguntas</p>
 					</perguntas>
-					<resultados>
-						<p>Resultados</p>
+					<resultados className={styles.overlayItem}>
+						<Image alt={'Resultados Icone'} src={Tick} width={20} />
+						<p style={{ marginLeft: 15 }}>Resultados</p>
 					</resultados>
-					<entrar>
-						<p>Entrar</p>
+					<entrar className={styles.overlayItem}>
+						<Image alt={'Entrar Icone'} src={Power} width={20} />
+						<p style={{ marginLeft: 15 }}>Entrar</p>
 					</entrar>
-					<remover>
-						<p>Remover</p>
+					<spacer
+						style={{
+							display: 'block',
+							flexGrow: 1,
+						}}
+					/>
+					<remover className={styles.overlayItem}>
+						<Image alt={'Remover Icone'} src={Trash} width={20} />
+						<p style={{ marginLeft: 15 }}>Remover</p>
 					</remover>
 				</cardoverlay>
 				<overlayright></overlayright>

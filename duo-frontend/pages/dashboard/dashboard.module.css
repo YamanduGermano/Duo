@@ -1,0 +1,38 @@
+.overlayItem {
+	color: white;
+	box-sizing: content-box;
+	font-size: 20px;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: flex-start;
+	border-left: solid 0px white;
+	transition: 100ms ease-in-out;
+}
+
+.overlayItem:hover {
+	border-left: solid 5px white;
+	padding-left: 10px;
+}
+
+.icon {
+	width: clamp(100px, 80px + 10vw, 200px);
+	margin: 0px auto;
+}
+
+.leftoverlay {
+	left: 0px;
+	transition: 100ms ease-in-out;
+	min-width: 250px;
+	position: fixed;
+	display: flex;
+	flex-direction: column;
+	width: fit-content;
+	padding: 20px;
+	padding-right: 30px;
+	top: 0px;
+	bottom: 0px;
+}
+.closed {
+	left: 100%;
+}
